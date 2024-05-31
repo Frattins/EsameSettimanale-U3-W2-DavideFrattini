@@ -1,12 +1,14 @@
-import { Observable, of } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { IToDo } from './Models/i-to-do';
 import { Injectable } from '@angular/core';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToDoService {
-  constructor() { }
+  constructor(private userSrv:UserService) { }
+
   toDos():Observable<IToDo[]> {
     const toDos: IToDo[] = [
       {
@@ -913,4 +915,37 @@ export class ToDoService {
       return of(toDos)
 
 }
+
+
+getToDosWithAuthors(): Observable<any[]> {
+  return this.userSrv.users().pipe(
+    switchMap(users => this.toDos().pipe(
+      map(toDos => toDos.map(todo => {
+        const user = users.find(user => user.id === todo.userId);
+        return {
+          ...todo,
+          author: user ? `${user.firstName} ${user.lastName}` : 'Molto sad, nessun autore trovato'
+        };
+      }))
+    ))
+  );
 }
+
+getCompletedToDos(): Observable<any[]> {
+  return this.getToDosWithAuthors().pipe(
+    map(toDos => toDos.filter(toDos => toDos.completed))
+  );
+}
+
+getUsersWithToDos(): Observable<any[]> {
+  return this.userSrv.users().pipe(
+    switchMap(users => this.toDos().pipe(
+      map(toDos => users.map(user => ({
+        ...user,
+        todos: toDos.filter(todo => todo.userId === user.id)
+      })))
+    ))
+  );
+}
+}
+

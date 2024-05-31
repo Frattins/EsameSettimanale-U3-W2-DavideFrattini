@@ -1,1 +1,55 @@
-<p>completed works!</p>
+<section class="vh-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-white">
+            <div class="text-center pt-3 pb-2">
+              <div class="d-flex justify-content-around py-2 mb-2">
+                <a class="nav-link active" routerLink="">Home</a>
+                <a class="nav-link" routerLinkActive="/completed">Completed</a>
+                <a class="nav-link" routerLink="/users">Users</a>
+              </div>
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                alt="Check"
+                width="60"
+              />
+
+              <div>
+                <h2 class="my-4 text-dark">Task List</h2>
+              </div>
+            </div>
+
+            <table class="mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Users</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="fw-normal" *ngFor="let t of completedTodos">
+                  <th>
+                    <span>{{ t.author }}</span>
+                  </th>
+                  <td class="align-middle">
+                    <span class="me-5">{{ t.todo }}</span>
+                  </td>
+                  <td class="align-middle">
+                    <h6 class="mb-0 me-5">
+                      <span>{{
+                        t.completed ? "Completed" : "bhe,strano"
+                      }}</span>
+                    </h6>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

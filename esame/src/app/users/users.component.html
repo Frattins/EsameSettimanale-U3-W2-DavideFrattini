@@ -1,1 +1,53 @@
-<p>users works!</p>
+<section class="vh-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-white">
+            <div class="text-center pt-3 pb-2">
+              <div class="d-flex justify-content-around py-2 mb-2">
+                <a class="nav-link active" routerLink="">Home</a>
+                <a class="nav-link" routerLink="/completed">Completed</a>
+                <a class="nav-link" routerLinkActive="/users">Users</a>
+              </div>
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                alt="Check"
+                width="60"
+              />
+              <h2 class="my-4 text-dark">Users and Their Tasks</h2>
+            </div>
+
+            <div
+              *ngFor="let user of usersWithToDos"
+              class="border border-secondary user-container mb-4 d-flex align-items-center"
+            >
+              <img
+                [src]="user.image"
+                alt="User Image"
+                class="user-image me-3"
+              />
+              <div class="align-content-center">
+                <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+                <ul>
+                  <li *ngFor="let todo of user.todos">
+                    {{ todo.todo }} -
+                    <span
+                      class="rounded-pill px-2"
+                      [ngClass]="{
+                        'bg-success': todo.completed,
+                        'bg-danger': !todo.completed
+                      }"
+                    >
+                      {{ todo.completed ? "Completed" : "Pending" }}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

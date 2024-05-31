@@ -11,35 +11,18 @@ import { ToDoService } from '../to-do.service';
 })
 export class HomeComponent {
 
-users: IUsers[] = [];
-toDos: IToDo[] = [];
 todosWithUsers: any[] = [];
 
-constructor(private usersSrv: UserService, private toDoSrv: ToDoService) {}
+constructor(private toDoSrv: ToDoService) {}
 
 ngOnInit() {
-  this.loadUsersAndToDos();
+  this.GetToDosWithUsers();
 }
 
-loadUsersAndToDos() {
-  this.usersSrv.users().subscribe(users => {
-    this.users = users;
-    this.toDoSrv.toDos().subscribe(todos => {
-      this.toDos = todos;
-      this.mergeData();
-    });
+GetToDosWithUsers() {
+  this.toDoSrv.getToDosWithAuthors().subscribe(todos => {
+    this.todosWithUsers = todos;
   });
-}
-
-mergeData() {
-  this.todosWithUsers = this.toDos.map(todo => {
-    const user = this.users.find(user => user.id === todo.userId);
-    return {
-      ...todo,
-      author: user ? `${user.firstName} ${user.lastName}` : 'Molto sad, nessun autore trovato'
-}
-  });
-
 }
 
 }

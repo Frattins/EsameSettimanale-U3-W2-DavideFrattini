@@ -5,7 +5,7 @@
         <div class="card mask-custom">
           <div class="card-body p-4 text-white">
             <div class="text-center pt-3 pb-2">
-              <div class="d-flex justify-content-around py-2 mb-2">
+              <div class="d-flex justify-content-around py-2 mb-4">
                 <a class="nav-link active" routerLinkActive="">Home</a>
                 <a class="nav-link" routerLink="/completed">Completed</a>
                 <a class="nav-link" routerLink="/users">Users</a>
@@ -21,10 +21,10 @@
               </div>
             </div>
 
-            <table class="table text-white mb-0">
+            <table class="">
               <thead>
                 <tr>
-                  <th scope="col">Team Member</th>
+                  <th scope="col">Users</th>
                   <th scope="col">Task</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
@@ -33,23 +33,30 @@
               <tbody>
                 <tr class="fw-normal" *ngFor="let t of todosWithUsers">
                   <th>
-                    <img
-                      src="https://placedog.net/300"
-                      alt="avatar 1"
-                      style="width: 45px; height: auto"
-                    />
-                    <span class="ms-2">{{ t.author }}</span>
+                    <span>{{ t.author }}</span>
                   </th>
                   <td class="align-middle">
-                    <span>{{ t.todo }}</span>
+                    <span class="me-5">{{ t.todo }}</span>
                   </td>
                   <td class="align-middle">
-                    <h6 class="mb-0">
+                    <h6 class="mb-0 me-5">
                       <span>{{ t.completed ? "Completed" : "Pending" }}</span>
                     </h6>
                   </td>
                   <td class="align-middle">
-                    <input type="checkbox" [(ngModel)]="t.completed" />
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckDefault"
+                        [(ngModel)]="t.completed"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckDefault"
+                      ></label>
+                    </div>
                   </td>
                 </tr>
               </tbody>
