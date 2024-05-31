@@ -1,4 +1,4 @@
-import { Observable, map, of, switchMap, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap, take } from 'rxjs';
 import { IToDo } from './Models/i-to-do';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
@@ -9,8 +9,7 @@ import { UserService } from './user.service';
 export class ToDoService {
   constructor(private userSrv:UserService) { }
 
-  toDos():Observable<IToDo[]> {
-    const toDos: IToDo[] = [
+  private toDos: IToDo[] =[
       {
         "id":1,
         "todo":"Do something nice for someone I care about",
@@ -912,19 +911,23 @@ export class ToDoService {
         "userId":32
       }
     ]
-      return of(toDos)
 
+private todosSubject = new BehaviorSubject<IToDo[]>(this.toDos);
+private todos$ = this.todosSubject.asObservable();
+
+
+todos(): Observable<IToDo[]> {
+  return this.todos$;
 }
 
-
 getToDosWithAuthors(): Observable<any[]> {
-  return this.userSrv.users().pipe(
-    switchMap(users => this.toDos().pipe(
+  return this.userSrv.getUsers().pipe(
+    switchMap(users => this.todos$.pipe(
       map(toDos => toDos.map(todo => {
         const user = users.find(user => user.id === todo.userId);
         return {
           ...todo,
-          author: user ? `${user.firstName} ${user.lastName}` : 'Molto sad, nessun autore trovato'
+          author: user ? `${user.firstName} ${user.lastName}` : 'Unknown'
         };
       }))
     ))
@@ -933,18 +936,39 @@ getToDosWithAuthors(): Observable<any[]> {
 
 getCompletedToDos(): Observable<any[]> {
   return this.getToDosWithAuthors().pipe(
-    map(toDos => toDos.filter(toDos => toDos.completed))
+    map(toDos => toDos.filter(todo => todo.completed))
   );
 }
 
 getUsersWithToDos(): Observable<any[]> {
-  return this.userSrv.users().pipe(
-    switchMap(users => this.toDos().pipe(
+  return this.userSrv.getUsers().pipe(
+    switchMap(users => this.todos$.pipe(
       map(toDos => users.map(user => ({
         ...user,
         todos: toDos.filter(todo => todo.userId === user.id)
       })))
     ))
+  );
+}
+
+updateTodoStatus(id: number, status: boolean): void {
+  const todos = this.todosSubject.getValue();
+  const todo = todos.find(t => t.id === id);
+  if (todo) {
+    todo.completed = status;
+    this.todosSubject.next(todos);
+  }
+}
+
+
+
+searchTodosByUserName(query: string): Observable<any[]> {
+  const lowerCaseQuery = query.toLowerCase();
+  return this.getToDosWithAuthors().pipe(
+    map(todos => todos.filter(todo => {
+      const author = todo.author.toLowerCase();
+      return author.includes(lowerCaseQuery);
+    }))
   );
 }
 }

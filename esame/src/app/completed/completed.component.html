@@ -17,7 +17,7 @@
               />
 
               <div>
-                <h2 class="my-4 text-dark">Task List</h2>
+                <h2 class="my-4 text-dark">Completed Task</h2>
               </div>
             </div>
 
@@ -27,6 +27,7 @@
                   <th scope="col">Users</th>
                   <th scope="col">Task</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Change the status</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,15 +35,31 @@
                   <th>
                     <span>{{ t.author }}</span>
                   </th>
-                  <td class="align-middle">
+                  <td class="">
                     <span class="me-5">{{ t.todo }}</span>
                   </td>
-                  <td class="align-middle">
+                  <td class="">
                     <h6 class="mb-0 me-5">
                       <span>{{
                         t.completed ? "Completed" : "bhe,strano"
                       }}</span>
                     </h6>
+                  </td>
+                  <td class="">
+                    <div class="form-check form-switch ms-5">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckDefault"
+                        [(ngModel)]="t.completed"
+                        (change)="onTodoStatusChange(t)"
+                      />
+                      <label
+                        class="form-check-label"
+                        for="flexSwitchCheckDefault"
+                      ></label>
+                    </div>
                   </td>
                 </tr>
               </tbody>

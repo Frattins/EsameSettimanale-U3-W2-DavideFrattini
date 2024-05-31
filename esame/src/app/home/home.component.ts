@@ -11,18 +11,35 @@ import { ToDoService } from '../to-do.service';
 })
 export class HomeComponent {
 
-todosWithUsers: any[] = [];
+  todosWithAuthors: any[] = [];
+  filteredTodos: any[] = [];
+  searchQuery: string = '';
 
-constructor(private toDoSrv: ToDoService) {}
+  constructor(private toDoService: ToDoService) { }
 
-ngOnInit() {
-  this.GetToDosWithUsers();
-}
+  ngOnInit() {
+    this.loadToDosWithAuthors();
+  }
 
-GetToDosWithUsers() {
-  this.toDoSrv.getToDosWithAuthors().subscribe(todos => {
-    this.todosWithUsers = todos;
-  });
-}
+  loadToDosWithAuthors() {
+    this.toDoService.getToDosWithAuthors().subscribe(todos => {
+      this.todosWithAuthors = todos;
+      this.filteredTodos = todos;
+    });
+  }
 
+  onTodoStatusChange(todo: IToDo): void {
+    this.toDoService.updateTodoStatus(todo.id, todo.completed);
+  }
+
+  onSearch() {
+    const query = this.searchQuery.toLowerCase();
+    if (query) {
+      this.toDoService.searchTodosByUserName(query).subscribe(filteredTodos => {
+        this.filteredTodos = filteredTodos;
+      });
+    } else {
+      this.filteredTodos = this.todosWithAuthors;
+    }
+  }
 }

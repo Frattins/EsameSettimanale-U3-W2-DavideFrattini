@@ -21,6 +21,18 @@
               </div>
             </div>
 
+            <div class="mb-4 d-flex justify-content-center">
+              <input
+                type="text"
+                class="form-control w-50"
+                placeholder="Search by author"
+                [(ngModel)]="searchQuery"
+              />
+              <button class="btn btn-danger mx-2 fs-3" (click)="onSearch()">
+                Cerca
+              </button>
+            </div>
+
             <table class="">
               <thead>
                 <tr>
@@ -31,7 +43,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="fw-normal" *ngFor="let t of todosWithUsers">
+                <tr class="fw-normal" *ngFor="let t of todosWithAuthors">
                   <th>
                     <span>{{ t.author }}</span>
                   </th>
@@ -51,6 +63,7 @@
                         role="switch"
                         id="flexSwitchCheckDefault"
                         [(ngModel)]="t.completed"
+                        (change)="onTodoStatusChange(t)"
                       />
                       <label
                         class="form-check-label"

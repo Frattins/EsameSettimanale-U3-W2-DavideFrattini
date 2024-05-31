@@ -7,8 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   constructor() { }
-  users():Observable<IUsers[]> {
-    const users: IUsers[] = [
+  private users: IUsers[] = [
     {
       "id":1,
       "firstName":"Terry",
@@ -810,7 +809,9 @@ export class UserService {
       "title":"VP Sales"
     }
   ]
-    return of(users)
+  getUsers(): Observable<IUsers[]> {
+    return of(this.users);
+  }
 
-}
+
 }

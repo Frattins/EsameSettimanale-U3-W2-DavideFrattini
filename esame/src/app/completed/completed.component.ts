@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToDoService } from '../to-do.service';
+import { IToDo } from '../Models/i-to-do';
 
 @Component({
   selector: 'app-completed',
@@ -19,6 +20,10 @@ export class CompletedComponent {
     this.toDosrv.getCompletedToDos().subscribe(todos => {
       this.completedTodos = todos;
     });
+  }
+
+  onTodoStatusChange(todo: IToDo): void {
+    this.toDosrv.updateTodoStatus(todo.id, todo.completed);
   }
 }
 
