@@ -9,6 +9,7 @@ import { CompletedComponent } from './completed/completed.component';
 import { UsersComponent } from './users/users.component';
 import { NavbarComponent } from './mainthing/navbar/navbar.component';
 import { FooterComponent } from './mainthing/footer/footer.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FooterComponent } from './mainthing/footer/footer.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
