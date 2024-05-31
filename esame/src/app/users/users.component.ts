@@ -13,10 +13,10 @@ export class UsersComponent {
   constructor(private toDoService: ToDoService) { }
 
   ngOnInit() {
-    this.loadUsersWithToDos();
+    this.GetUsersWithToDos();
   }
 
-  loadUsersWithToDos() {
+  GetUsersWithToDos() {
     this.toDoService.getUsersWithToDos().subscribe(users => {
       this.usersWithToDos = users;
     });
