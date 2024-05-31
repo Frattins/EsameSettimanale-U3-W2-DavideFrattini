@@ -7,8 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { CompletedComponent } from './completed/completed.component';
 import { UsersComponent } from './users/users.component';
-import { NavbarComponent } from './mainthing/navbar/navbar.component';
-import { FooterComponent } from './mainthing/footer/footer.component';
+
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -17,8 +16,6 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     CompletedComponent,
     UsersComponent,
-    NavbarComponent,
-    FooterComponent
   ],
   imports: [
     BrowserModule,
