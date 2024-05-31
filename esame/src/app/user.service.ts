@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { IUsers } from './Models/i-users';
 import { Injectable } from '@angular/core';
 
@@ -5,8 +6,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
-
-  userArrey:IUsers[] = [
+  constructor() { }
+  users():Observable<IUsers[]> {
+    const users: IUsers[] = [
     {
       "id":1,
       "firstName":"Terry",
@@ -808,6 +810,7 @@ export class UserService {
       "title":"VP Sales"
     }
   ]
+    return of(users)
 
-  constructor() { }
+}
 }

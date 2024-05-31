@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { IToDo } from './Models/i-to-do';
 import { Injectable } from '@angular/core';
 
@@ -5,8 +6,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ToDoService {
-
-  toDoArrey:IToDo[] = [
+  constructor() { }
+  toDos():Observable<IToDo[]> {
+    const toDos: IToDo[] = [
       {
         "id":1,
         "todo":"Do something nice for someone I care about",
@@ -908,6 +910,7 @@ export class ToDoService {
         "userId":32
       }
     ]
+      return of(toDos)
 
-  constructor() { }
+}
 }
